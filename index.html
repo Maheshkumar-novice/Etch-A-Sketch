@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Etch-A-Sketch | The Odin Project</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <input type="range" min="10" max="100" value="50" class="slider" />
+      <div class="grid-container" data-dimension="50"></div>
+      <div class="utils">
+        <div class="color-buttons">
+          <button class="color-button" data-color="rgb">Multi Color</button>
+          <button class="color-button" data-color="gray">Shades of Gray</button>
+          <button class="color-button" data-color="odin">Odin</button>
+        </div>
+        <p class="current-color"></p>
+        <div class="util-buttons">
+          <button class="util-button" data-util="toggle-grid">
+            Toggle Grid
+          </button>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+    <script src="./script.js"></script>
+  </body>
+</html>
