@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <!-- <header></header> -->
     <main>
       <h1>Etch-A-Sketch</h1>
       <input type="range" min="10" max="100" value="50" class="slider" />
@@ -16,8 +15,12 @@
       <div class="grid-container shadow-off" data-dimension="50"></div>
       <div class="utils">
         <div class="color-buttons">
+          <button class="color-button color-wheel" data-color="black">
+            <input type="color" /> Single Color
+          </button>
           <button class="color-button" data-color="rgb">Multi Color</button>
           <button class="color-button" data-color="gray">Shades of Gray</button>
+          <button class="color-button" data-color="increment">To Black</button>
         </div>
         <div class="util-buttons">
           <button class="util-button" data-util="toggle-grid">
@@ -29,8 +32,12 @@
           <button class="util-button" data-util="clear">Clear</button>
         </div>
       </div>
+      <h3>
+        <a href="https://theodinproject.com" target="_blank"
+          >@ The Odin Project</a
+        >
+      </h3>
     </main>
-    <!-- <footer></footer> -->
     <script src="./script.js"></script>
   </body>
 </html>

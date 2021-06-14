@@ -21,7 +21,7 @@ function createGrid(pixelDimension) {
   slider.setAttribute("data-dimension", pixelDimension);
   pixelContainer.style.gridTemplate = `repeat(${noOfpixels}, 1fr) / repeat(${noOfpixels}, 1fr)`;
   for (let i = 0; i < Math.pow(noOfpixels, 2); i++) {
-    pixelBoxes += "<div class='sqr'></div>";
+    pixelBoxes += "<div class='sqr' data-opacity='10'></div>";
   }
   pixelContainer.innerHTML = pixelBoxes;
   [...pixelContainer.children].forEach((child) => addListener(child));
@@ -34,6 +34,7 @@ function addListener(child) {
 // ========
 // Colors - start
 // ========
+let colorInput = document.querySelector('input[type="color"]');
 let multiColor = document.querySelector('[data-color="rgb"]');
 multiColor.classList.add("active");
 let currentColor = document.querySelector(".current-color");
@@ -46,9 +47,16 @@ colorButtons.forEach((button) =>
         button.classList.remove("active");
       }
     });
+    if (e.target !== e.currentTarget) {
+      return;
+    }
     e.target.classList.add("active");
     currentColor.textContent = e.target.textContent;
-    colorValue = e.target.dataset.color;
+    if (e.target.classList.contains("color-wheel")) {
+      colorValue = colorInput.value;
+    } else {
+      colorValue = e.target.dataset.color;
+    }
     // pixelContainer.innerHTML = "";
     // document.documentElement.style.setProperty("--border", "green");
     // createGrid(pixelDimension);
@@ -67,7 +75,6 @@ function getBlackVariant() {
   currentColor.textContent = `rgb(${val}, ${val}, ${val})`.toUpperCase();
   return `rgb(${val}, ${val}, ${val})`;
 }
-
 function colorChange(child) {
   switch (colorValue) {
     case "rgb":
@@ -76,6 +83,17 @@ function colorChange(child) {
       break;
     case "gray":
       color = getBlackVariant();
+      break;
+    case "increment":
+      color = `rgb(0, 0, 0, ${child.dataset.opacity}%)`;
+      if (child.dataset.opacity == 100) {
+        break;
+      }
+      child.dataset.opacity = parseInt(child.dataset.opacity) + 10;
+      break;
+    default:
+      color = colorValue;
+      break;
   }
   child.style.background = color;
   pixelContainer.classList.add("custom-border");
