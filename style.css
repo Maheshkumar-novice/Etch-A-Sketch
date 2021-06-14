@@ -22,6 +22,7 @@ body {
 }
 h1 {
   font-size: 3rem;
+  font-weight: 300;
 }
 button {
   height: 3em;
@@ -126,7 +127,7 @@ main {
   flex-wrap: wrap;
   gap: 1rem;
 }
-.util-button:hover {
+[data-util="clear"]:hover {
   border: 4px solid green;
 }
 .utils {

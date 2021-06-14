@@ -84,9 +84,15 @@ function colorChange(child) {
 // ========
 // Utils - start
 // ========
-let utilButtons = [...document.querySelectorAll(".util-buttons")];
+let utilButtons = [...document.querySelectorAll("[data-util]")];
 utilButtons.forEach((button) =>
-  button.addEventListener("click", (e) => toggleUtil(e.target))
+  button.addEventListener("click", (e) => {
+    if (!(e.target.dataset.util == "clear")) {
+      console.log(e.target);
+      e.target.classList.toggle("active");
+    }
+    toggleUtil(e.target);
+  })
 );
 function toggleUtil(button) {
   switch (button.dataset.util) {
