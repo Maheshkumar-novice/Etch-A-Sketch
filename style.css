@@ -62,19 +62,20 @@ main {
 }
 .grid-container::before {
   content: "";
-  width: 104%;
-  height: 104%;
+  width: 106%;
+  height: 106%;
   position: absolute;
-  left: -2%;
-  top: -2%;
+  left: -3%;
+  top: -3%;
   z-index: -1;
   border: 10px solid rgba(0, 0, 0, 0.3);
   /* border-radius: 5px; */
   transition: all 0.5s ease-in-out;
-  /* box-shadow: 4px 4px 4px var(--border), -4px 4px 4px var(--border); */
+  box-shadow: inset 4px 4px 4px var(--border), inset -4px -4px 4px var(--border);
 }
 .grid-container.custom-border::before {
   border: 10px solid var(--border);
+  opacity: 0.6;
 }
 .grid-container::after {
   content: "Current Square Size: " attr(data-dimension) " x "
@@ -128,11 +129,12 @@ main {
   border: 4px solid green;
 }
 .slider {
+  position: relative;
   cursor: pointer;
   -webkit-appearance: none;
-  height: 15px;
+  height: 3px;
   width: 20rem;
-  padding-right: 5px;
+  /* padding-right: 5px; */
   border-radius: 5px;
   background: #d3d3d3;
   outline: none;
@@ -142,16 +144,16 @@ main {
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 10px;
-  height: 30px;
+  width: 8px;
+  height: 20px;
   background: green;
   cursor: pointer;
   border-radius: 10px;
 }
 
 .slider::-moz-range-thumb {
-  width: 10px;
-  height: 30px;
+  width: 8px;
+  height: 20px;
   background: green;
   cursor: pointer;
   border-radius: 10px;
@@ -162,4 +164,8 @@ main {
 .slider::after {
   content: attr(data-dimension);
   color: black;
+  font-weight: bold;
+  position: absolute;
+  right: 0;
+  top: 1rem;
 }
