@@ -21,6 +21,7 @@ function createGrid(pixelDimension) {
   noOfpixels = Math.round(pixelContainer.clientHeight / pixelDimension);
   pixelBoxes = "";
   pixelContainer.setAttribute("data-dimension", pixelDimension);
+  slider.setAttribute("data-dimension", pixelDimension);
 
   // Create Pixels Grid
   pixelContainer.style.gridTemplate = `repeat(${noOfpixels}, 1fr) / repeat(${noOfpixels}, 1fr)`;
@@ -35,6 +36,9 @@ function createGrid(pixelDimension) {
     child.addEventListener("mouseenter", () => {
       colorChange(child);
     });
+    // child.addEventListener("touchmove", () => {
+    //   colorChange(child);
+    // });
     // child.addEventListener('mouseleave', () => console.log('mouseout'));
   }
 }
@@ -46,11 +50,19 @@ function createGrid(pixelDimension) {
 // ========
 let currentColor = document.querySelector(".current-color");
 let colorValue = "rgb";
-let colorButtos = [...document.querySelectorAll(".color-button")];
-colorButtos.forEach((button) =>
+let colorButtons = [...document.querySelectorAll(".color-button")];
+colorButtons.forEach((button) =>
   button.addEventListener("click", (e) => {
+    colorButtons.forEach((button) => {
+      if (button.classList.contains("active")) {
+        button.classList.remove("active");
+      }
+    });
+    e.target.classList.add("active");
+    currentColor.textContent = e.target.textContent;
     colorValue = e.target.dataset.color;
     pixelContainer.innerHTML = "";
+    document.documentElement.style.setProperty("--border", "green");
     createGrid(pixelDimension);
   })
 );
@@ -61,10 +73,12 @@ function getRandomValue() {
 
 function getBlackVariant() {
   let val = getRandomValue();
-  if (val >= 220 || val <= 45) {
-    val = 111;
+  if (val <= 50) {
+    val += 110;
+  } else if (val >= 200) {
+    val -= 80;
   }
-  console.log(val);
+  // console.log(val);
   currentColor.textContent = `rgb(${val}, ${val}, ${val})`;
   // currentColor.style.color = color;
   return `rgb(${val}, ${val}, ${val})`;
@@ -84,10 +98,41 @@ function colorChange(child) {
   pixelContainer.classList.add("custom-border");
   document.documentElement.style.setProperty("--border", color);
 }
-
+// ========
+// Colors - end
+// ========
+// ========
+// Utils - start
+// ========
 let utilButtons = [...document.querySelectorAll(".util-buttons")];
-utilButtons.forEach((button) => button.addEventListener("click", toggleGrid));
+utilButtons.forEach((button) =>
+  button.addEventListener("click", (e) => toggleUtil(e.target))
+);
 
-function toggleGrid() {
-  pixelContainer.classList.toggle("grid-on");
+function toggleUtil(button) {
+  switch (button.dataset.util) {
+    case "toggle-grid":
+      pixelContainer.classList.toggle("grid-on");
+      break;
+    case "clear":
+      pixelContainer.innerHTML = "";
+      createGrid(pixelDimension);
+      break;
+  }
 }
+
+pixelContainer.addEventListener(
+  "touchstart",
+  () => (currentColor.textContent = "touchstart")
+);
+pixelContainer.addEventListener(
+  "touchend",
+  () => (currentColor.textContent = "touchend")
+);
+pixelContainer.addEventListener("touchmove", function (e) {
+  e.preventDefault();
+  colorChange(e.target);
+  // currentColor.textContent = e.target;
+  // colorChange(e.target);al
+  // e.target.style.background = "black";
+});
