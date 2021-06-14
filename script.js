@@ -86,6 +86,7 @@ function colorChange(child) {
       break;
     case "increment":
       color = `rgb(0, 0, 0, ${child.dataset.opacity}%)`;
+      currentColor.textContent = color;
       if (child.dataset.opacity == 100) {
         break;
       }
@@ -93,6 +94,7 @@ function colorChange(child) {
       break;
     default:
       color = colorValue;
+      currentColor.textContent = colorValue;
       break;
   }
   child.style.background = color;
