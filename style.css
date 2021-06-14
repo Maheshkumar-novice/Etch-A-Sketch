@@ -56,7 +56,7 @@ main {
   max-width: 500px;
   text-align: center;
   display: grid;
-  grid-template: repeat(var(--pixels), 1fr) / repeat(var(--pixels), 1fr);
+  grid-template: repeat(5, 1fr) / repeat(5, 1fr);
   position: relative;
   cursor: pointer;
   margin-bottom: 4rem;

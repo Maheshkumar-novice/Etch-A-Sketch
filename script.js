@@ -81,6 +81,15 @@ function colorChange(child) {
   pixelContainer.classList.add("custom-border");
   document.documentElement.style.setProperty("--border", color);
 }
+pixelContainer.addEventListener("touchmove", function (e) {
+  e.preventDefault();
+  let myLocation = e.changedTouches[0];
+  let realTarget = document.elementFromPoint(
+    myLocation.clientX,
+    myLocation.clientY
+  );
+  if (realTarget.classList.contains("sqr")) colorChange(realTarget);
+});
 // ========
 // Utils - start
 // ========
@@ -88,7 +97,7 @@ let utilButtons = [...document.querySelectorAll("[data-util]")];
 utilButtons.forEach((button) =>
   button.addEventListener("click", (e) => {
     if (!(e.target.dataset.util == "clear")) {
-      console.log(e.target);
+      // console.log(e.target);
       e.target.classList.toggle("active");
     }
     toggleUtil(e.target);
@@ -115,12 +124,3 @@ function toggleUtil(button) {
 //   "touchend",
 //   (e) => (currentColor.textContent = "touchend")
 // );
-pixelContainer.addEventListener("touchmove", function (e) {
-  e.preventDefault();
-  let myLocation = e.changedTouches[0];
-  let realTarget = document.elementFromPoint(
-    myLocation.clientX,
-    myLocation.clientY
-  );
-  if (realTarget.classList.contains("sqr")) colorChange(realTarget);
-});
