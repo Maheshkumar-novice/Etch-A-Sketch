@@ -95,7 +95,7 @@ main {
   opacity: 0.6;
 }
 .grid-container::after {
-  content: "Current Square Size: " attr(data-dimension) " x "
+  content: "Current Single Square Dimension: " attr(data-dimension) " x "
     attr(data-dimension);
   /* background-color: white; */
   font-size: 1.25em;
