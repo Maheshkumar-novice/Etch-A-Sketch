@@ -21,7 +21,7 @@ function createGrid(pixelDimension) {
   slider.setAttribute("data-dimension", pixelDimension);
   pixelContainer.style.gridTemplate = `repeat(${noOfpixels}, 1fr) / repeat(${noOfpixels}, 1fr)`;
   for (let i = 0; i < Math.pow(noOfpixels, 2); i++) {
-    pixelBoxes += "<div></div>";
+    pixelBoxes += "<div class='sqr'></div>";
   }
   pixelContainer.innerHTML = pixelBoxes;
   [...pixelContainer.children].forEach((child) => addListener(child));
@@ -64,7 +64,7 @@ function getBlackVariant() {
   } else if (val >= 200) {
     val -= 80;
   }
-  currentColor.textContent = `rgb(${val}, ${val}, ${val})`;
+  currentColor.textContent = `rgb(${val}, ${val}, ${val})`.toUpperCase();
   return `rgb(${val}, ${val}, ${val})`;
 }
 
@@ -72,7 +72,7 @@ function colorChange(child) {
   switch (colorValue) {
     case "rgb":
       color = `rgb(${getRandomValue()}, ${getRandomValue()}, ${getRandomValue()})`;
-      currentColor.textContent = color;
+      currentColor.textContent = color.toUpperCase();
       break;
     case "gray":
       color = getBlackVariant();
@@ -97,17 +97,24 @@ function toggleUtil(button) {
       pixelContainer.innerHTML = "";
       createGrid(pixelDimension);
       break;
+    case "toggle-shadow":
+      pixelContainer.classList.toggle("shadow-off");
   }
 }
-pixelContainer.addEventListener(
-  "touchstart",
-  () => (currentColor.textContent = "touchstart")
-);
-pixelContainer.addEventListener(
-  "touchend",
-  () => (currentColor.textContent = "touchend")
-);
+// pixelContainer.addEventListener(
+//   "touchstart",
+//   () => (currentColor.textContent = "touchstart")
+// );
+// pixelContainer.addEventListener(
+//   "touchend",
+//   (e) => (currentColor.textContent = "touchend")
+// );
 pixelContainer.addEventListener("touchmove", function (e) {
   e.preventDefault();
-  colorChange(e.target);
+  let myLocation = e.changedTouches[0];
+  let realTarget = document.elementFromPoint(
+    myLocation.clientX,
+    myLocation.clientY
+  );
+  if (realTarget.classList.contains("sqr")) colorChange(realTarget);
 });

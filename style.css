@@ -61,17 +61,24 @@ main {
   margin-bottom: 4rem;
 }
 .grid-container::before {
-  content: "";
-  width: 106%;
-  height: 106%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  content: "Hover Over Here!";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 2rem;
+  width: 104%;
+  height: 104%;
   position: absolute;
-  left: -3%;
-  top: -3%;
+  left: -2%;
+  top: -2%;
   z-index: -1;
   border: 10px solid rgba(0, 0, 0, 0.3);
   /* border-radius: 5px; */
   transition: all 0.5s ease-in-out;
-  box-shadow: inset 4px 4px 4px var(--border), inset -4px -4px 4px var(--border);
+  box-shadow: inset 4px 4px 4px black;
+  /* box-shadow: inset 4px 4px 4px var(--border), inset -4px -4px 4px var(--border); */
 }
 .grid-container.custom-border::before {
   border: 10px solid var(--border);
@@ -96,12 +103,16 @@ main {
 }
 .grid-container > * {
   transition: all 0.1s ease-in-out;
+  box-shadow: 4px 4px 4px black;
 }
 .grid-container.grid-on > * {
   border: 1px dotted black;
 }
+.grid-container.shadow-off > * {
+  box-shadow: none;
+}
 .current-color {
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-size: 1.5rem;
   text-align: center;
   width: 100%;
