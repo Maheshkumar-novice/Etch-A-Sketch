@@ -124,3 +124,11 @@ function toggleUtil(button) {
 //   "touchend",
 //   (e) => (currentColor.textContent = "touchend")
 // );
+// let ev = new MouseEvent("mousemove", {
+//   view: window,
+//   bubbles: true,
+//   cancelable: true,
+//   clientX: pixelContainer.offsetLeft + 10,
+//   clientY: pixelContainer.offsetTop + 10,
+// });
+// pixelContainer.dispatchEvent(ev);
