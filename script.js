@@ -1,17 +1,14 @@
 // ========
 // Pixels - start
 // ========
-// Element Selection
 let pixelContainer = document.querySelector(".grid-container");
 let slider = document.querySelector(".slider");
 let pixelDimension = 50;
 let noOfpixels;
 let pixelBoxes;
 
-// Initial Grid
 createGrid(pixelDimension);
 
-// Change Grid when Slider value change
 slider.addEventListener("input", () => {
   pixelDimension = slider.value;
   createGrid(pixelDimension);
@@ -22,32 +19,23 @@ function createGrid(pixelDimension) {
   pixelBoxes = "";
   pixelContainer.setAttribute("data-dimension", pixelDimension);
   slider.setAttribute("data-dimension", pixelDimension);
-
-  // Create Pixels Grid
   pixelContainer.style.gridTemplate = `repeat(${noOfpixels}, 1fr) / repeat(${noOfpixels}, 1fr)`;
   for (let i = 0; i < Math.pow(noOfpixels, 2); i++) {
     pixelBoxes += "<div></div>";
   }
   pixelContainer.innerHTML = pixelBoxes;
-
-  // Event Listener to Grid Pixels
   [...pixelContainer.children].forEach((child) => addListener(child));
-  function addListener(child) {
-    child.addEventListener("mouseenter", () => {
-      colorChange(child);
-    });
-    // child.addEventListener("touchmove", () => {
-    //   colorChange(child);
-    // });
-    // child.addEventListener('mouseleave', () => console.log('mouseout'));
-  }
 }
-// ========
-// Pixels - end
-// ========
+function addListener(child) {
+  child.addEventListener("mouseenter", () => {
+    colorChange(child);
+  });
+}
 // ========
 // Colors - start
 // ========
+let multiColor = document.querySelector('[data-color="rgb"]');
+multiColor.classList.add("active");
 let currentColor = document.querySelector(".current-color");
 let colorValue = "rgb";
 let colorButtons = [...document.querySelectorAll(".color-button")];
@@ -61,16 +49,14 @@ colorButtons.forEach((button) =>
     e.target.classList.add("active");
     currentColor.textContent = e.target.textContent;
     colorValue = e.target.dataset.color;
-    pixelContainer.innerHTML = "";
-    document.documentElement.style.setProperty("--border", "green");
-    createGrid(pixelDimension);
+    // pixelContainer.innerHTML = "";
+    // document.documentElement.style.setProperty("--border", "green");
+    // createGrid(pixelDimension);
   })
 );
-
 function getRandomValue() {
   return Math.floor(Math.random() * 256);
 }
-
 function getBlackVariant() {
   let val = getRandomValue();
   if (val <= 50) {
@@ -78,9 +64,7 @@ function getBlackVariant() {
   } else if (val >= 200) {
     val -= 80;
   }
-  // console.log(val);
   currentColor.textContent = `rgb(${val}, ${val}, ${val})`;
-  // currentColor.style.color = color;
   return `rgb(${val}, ${val}, ${val})`;
 }
 
@@ -89,7 +73,6 @@ function colorChange(child) {
     case "rgb":
       color = `rgb(${getRandomValue()}, ${getRandomValue()}, ${getRandomValue()})`;
       currentColor.textContent = color;
-      // currentColor.style.color = color;
       break;
     case "gray":
       color = getBlackVariant();
@@ -99,16 +82,12 @@ function colorChange(child) {
   document.documentElement.style.setProperty("--border", color);
 }
 // ========
-// Colors - end
-// ========
-// ========
 // Utils - start
 // ========
 let utilButtons = [...document.querySelectorAll(".util-buttons")];
 utilButtons.forEach((button) =>
   button.addEventListener("click", (e) => toggleUtil(e.target))
 );
-
 function toggleUtil(button) {
   switch (button.dataset.util) {
     case "toggle-grid":
@@ -120,7 +99,6 @@ function toggleUtil(button) {
       break;
   }
 }
-
 pixelContainer.addEventListener(
   "touchstart",
   () => (currentColor.textContent = "touchstart")
@@ -132,7 +110,4 @@ pixelContainer.addEventListener(
 pixelContainer.addEventListener("touchmove", function (e) {
   e.preventDefault();
   colorChange(e.target);
-  // currentColor.textContent = e.target;
-  // colorChange(e.target);al
-  // e.target.style.background = "black";
 });

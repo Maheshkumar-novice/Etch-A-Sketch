@@ -8,16 +8,17 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <header></header>
+    <!-- <header></header> -->
     <main>
+      <h1>Etch-A-Sketch</h1>
       <input type="range" min="10" max="100" value="50" class="slider" />
+      <p class="current-color">Waiting...</p>
       <div class="grid-container" data-dimension="50"></div>
       <div class="utils">
         <div class="color-buttons">
           <button class="color-button" data-color="rgb">Multi Color</button>
           <button class="color-button" data-color="gray">Shades of Gray</button>
         </div>
-        <p class="current-color"></p>
         <div class="util-buttons">
           <button class="util-button" data-util="toggle-grid">
             Toggle Grid
@@ -26,7 +27,7 @@
         </div>
       </div>
     </main>
-    <footer></footer>
+    <!-- <footer></footer> -->
     <script src="./script.js"></script>
   </body>
 </html>
