@@ -1,5 +1,5 @@
 // ========
-// Pixels - start
+// Pixels - start - Pixel - Each Square in the grid
 // ========
 let pixelContainer = document.querySelector(".grid-container");
 let slider = document.querySelector(".slider");
@@ -7,13 +7,16 @@ let pixelDimension = 50;
 let noOfpixels;
 let pixelBoxes;
 
+// Create Initial Grid with Pixels of Dimension 50
 createGrid(pixelDimension);
 
+// Listen for events to change Pixel Dimension
 slider.addEventListener("input", () => {
   pixelDimension = slider.value;
   createGrid(pixelDimension);
 });
 
+// Grid Creator
 function createGrid(pixelDimension) {
   noOfpixels = Math.round(pixelContainer.clientHeight / pixelDimension);
   pixelBoxes = "";
@@ -26,11 +29,25 @@ function createGrid(pixelDimension) {
   pixelContainer.innerHTML = pixelBoxes;
   [...pixelContainer.children].forEach((child) => addListener(child));
 }
+
+// Add Event Listeners to Each of the Pixels
 function addListener(child) {
   child.addEventListener("mouseenter", () => {
     colorChange(child);
   });
 }
+
+// Add Touchmove event on the Grid Container to Change Pixel Colors
+pixelContainer.addEventListener("touchmove", function (e) {
+  e.preventDefault();
+  let myLocation = e.changedTouches[0];
+  let realTarget = document.elementFromPoint(
+    myLocation.clientX,
+    myLocation.clientY
+  );
+  if (realTarget.classList.contains("sqr")) colorChange(realTarget);
+});
+
 // ========
 // Colors - start
 // ========
@@ -40,6 +57,8 @@ multiColor.classList.add("active");
 let currentColor = document.querySelector(".current-color");
 let colorValue = "rgb";
 let colorButtons = [...document.querySelectorAll(".color-button")];
+
+// Listen for clicks
 colorButtons.forEach((button) =>
   button.addEventListener("click", (e) => {
     colorButtons.forEach((button) => {
@@ -47,6 +66,7 @@ colorButtons.forEach((button) =>
         button.classList.remove("active");
       }
     });
+    // To not match children
     if (e.target !== e.currentTarget) {
       return;
     }
@@ -57,14 +77,13 @@ colorButtons.forEach((button) =>
     } else {
       colorValue = e.target.dataset.color;
     }
-    // pixelContainer.innerHTML = "";
-    // document.documentElement.style.setProperty("--border", "green");
-    // createGrid(pixelDimension);
   })
 );
+
 function getRandomValue() {
   return Math.floor(Math.random() * 256);
 }
+
 function getBlackVariant() {
   let val = getRandomValue();
   if (val <= 50) {
@@ -75,6 +94,7 @@ function getBlackVariant() {
   currentColor.textContent = `rgb(${val}, ${val}, ${val})`.toUpperCase();
   return `rgb(${val}, ${val}, ${val})`;
 }
+
 function colorChange(child) {
   switch (colorValue) {
     case "rgb":
@@ -85,8 +105,8 @@ function colorChange(child) {
       color = getBlackVariant();
       break;
     case "increment":
-      color = `rgb(0, 0, 0, ${child.dataset.opacity}%)`;
-      currentColor.textContent = color;
+      color = `rgba(0, 0, 0, ${child.dataset.opacity}%)`;
+      currentColor.textContent = color.toUpperCase();
       if (child.dataset.opacity == 100) {
         break;
       }
@@ -101,28 +121,22 @@ function colorChange(child) {
   pixelContainer.classList.add("custom-border");
   document.documentElement.style.setProperty("--border", color);
 }
-pixelContainer.addEventListener("touchmove", function (e) {
-  e.preventDefault();
-  let myLocation = e.changedTouches[0];
-  let realTarget = document.elementFromPoint(
-    myLocation.clientX,
-    myLocation.clientY
-  );
-  if (realTarget.classList.contains("sqr")) colorChange(realTarget);
-});
+
 // ========
 // Utils - start
 // ========
 let utilButtons = [...document.querySelectorAll("[data-util]")];
+
+// To Listen Clicks
 utilButtons.forEach((button) =>
   button.addEventListener("click", (e) => {
     if (!(e.target.dataset.util == "clear")) {
-      // console.log(e.target);
       e.target.classList.toggle("active");
     }
     toggleUtil(e.target);
   })
 );
+
 function toggleUtil(button) {
   switch (button.dataset.util) {
     case "toggle-grid":
@@ -136,19 +150,3 @@ function toggleUtil(button) {
       pixelContainer.classList.toggle("shadow-off");
   }
 }
-// pixelContainer.addEventListener(
-//   "touchstart",
-//   () => (currentColor.textContent = "touchstart")
-// );
-// pixelContainer.addEventListener(
-//   "touchend",
-//   (e) => (currentColor.textContent = "touchend")
-// );
-// let ev = new MouseEvent("mousemove", {
-//   view: window,
-//   bubbles: true,
-//   cancelable: true,
-//   clientX: pixelContainer.offsetLeft + 10,
-//   clientY: pixelContainer.offsetTop + 10,
-// });
-// pixelContainer.dispatchEvent(ev);
